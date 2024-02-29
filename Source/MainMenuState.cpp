@@ -35,6 +35,25 @@ void MainMenuState::initGui()
 {
 	const sf::VideoMode& videoMode = this->stateData->gfxSettings->resolution;
 	
+	// Background
+	this->background.setSize(
+		sf::Vector2f(
+			static_cast<float>(videoMode.width),
+			static_cast<float>(videoMode.height)
+		)
+	);
+
+	
+	if (!this->backgroundTexture.loadFromFile("Resources/MainMenuBackground.jpg")) {
+		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
+	}
+
+	this->background.setTexture(&this->backgroundTexture);
+
+
+	//this->background.setFillColor(sf::Color(26, 26, 26));
+	this->background.setPosition(0, 0);
+
 	// Buttons
 	this->buttons["GAME_STATE"] = new gui::Button(
 		gui::percentToPixelX(10.f, videoMode), gui::percentToPixelY(30.f, videoMode),
@@ -134,6 +153,8 @@ void MainMenuState::render(sf::RenderTarget* target) {
 	if (!target) {
 		target = this->window;
 	}
+
+	target->draw(this->background);
 
 	this->renderButtons(*target);
 }

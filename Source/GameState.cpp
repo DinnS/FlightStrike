@@ -54,6 +54,14 @@ void GameState::initFonts() {
 	}
 }
 
+void GameState::initSpritesheet() {
+	// Load Spritesheet
+	this->entitySpritesheet = new sf::Texture();
+	if (!this->entitySpritesheet->loadFromFile("Resources/spritesheet.png")) {
+		throw "ERROR::GAME_STATE::COULD_NOT_LOAD_SPRITESHEET";
+	}
+}
+
 void GameState::initPauseMenu() {
 	const sf::VideoMode& videoMode = this->stateData->gfxSettings->resolution;
 	
@@ -68,28 +76,23 @@ void GameState::initPauseMenu() {
 }
 
 void GameState::initPlayer() {
-	this->player = new Player(0, 0);
+	this->player = new Player(0, 0, this->entitySpritesheet);
 }
 
 void GameState::initMap() {
+	const sf::VideoMode& videoMode = this->stateData->gfxSettings->resolution;
+
 	this->background.setSize(
 		sf::Vector2f(
-			1000,
-			1000
+			static_cast<float>(videoMode.width),
+			static_cast<float>(videoMode.height)
 		)
 	);
 
-	if (!this->backgroundTexture.loadFromFile("Resources/Graphics/Game/Map.jpg")) {
-		throw "ERROR::MAIN_MENU_STATE::FAILED_TO_LOAD_BACKGROUND_TEXTURE";
-	}
-	this->background.setFillColor(sf::Color::Color(228, 211, 184));
+	this->background.setFillColor(sf::Color(26, 26, 26));
 	this->background.setPosition(0,0);
-	//this->background.setTexture(&this->backgroundTexture);
 	
-}
-
-void GameState::initBolts() {
-	this->bolts.emplace_back(200, 100);
+	
 }
 
 /*       CONSTRUCTORS/DESTRUCTORS      */
@@ -101,8 +104,8 @@ GameState::GameState(StateData* state_data) : State(state_data) {
 	this->initFonts();
 	this->initPauseMenu();
 	this->initMap();
+	this->initSpritesheet();
 	this->initPlayer();
-	this->initBolts();
 }
 
 GameState::~GameState() {
@@ -182,13 +185,12 @@ void GameState::update(const float& dt)
 	this->updateKeyTime(dt);
 	this->updateInput(dt);
 	if (!this->pause) {
-		this->updateView();
+		// Updating camera
+		//this->updateView();
+
 		this->updatePlayerInput(dt);
 
 		this->player->update(dt);
-
-		/*if(this->player)
-		this->bolts[0].update();*/
 	}
 	else {
 		this->pauseMenu->update(this->mousePosWindow);
@@ -209,21 +211,15 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->renderTexture.clear();
 
-	
-
 	this->renderTexture.setView(this->view);
 
 	this->renderMap(&this->renderTexture);
 	
-
 	this->player->render(this->renderTexture);
-
-	this->bolts[0].render(this->renderTexture);
 
 	// Render GUI
 	this->renderTexture.setView(this->renderTexture.getDefaultView());
 	
-
 	if (this->pause) {
 		this->pauseMenu->render(this->renderTexture);
 	}

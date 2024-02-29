@@ -1,10 +1,10 @@
-# Fevolve
+# Flight Strike
 
 ## Description
 
 Main library : SFML
 
-Fevolve is a simple game where you control a ship that competes with other ships. Ships can be upgraded by collecting bolts that are collected from random points on the map and by killing enemy ships. When upgrading a ship, the player can choose what type of ship it can move and evolve into.
+Flight Strike is a simple game where you control a ship and have to dodge various attacks, the complexity of which increases over time, and survive as long as possible.
 
 ```
 Current game development status: In progress

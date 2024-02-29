@@ -10,6 +10,8 @@ class MainMenuState : public State
 private:
 	/*                VARIABLES            */
 	sf::Font font;
+	sf::Texture backgroundTexture;
+	sf::RectangleShape background;
 	
 	std::map<std::string, gui::Button*> buttons;
 

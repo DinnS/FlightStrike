@@ -8,16 +8,16 @@ class Player : public Entity
 {
 private:
 	/*                VARIABLES            */
-	std::map<std::string, sf::Texture*> textureSheet;
+	std::map<std::string, sf::IntRect> textureSheetRect;
 
 	/*             INITIALIZATION          */
 	void initVariables();
-	void initTextureSheet();
+	void initTextureSheet(sf::Texture* spritesheet);
 	void initComponents();
 
 public:
 	/*       CONSTRUCTORS/DESTRUCTORS      */
-	Player(float x, float y);
+	Player(float x, float y, sf::Texture* spritesheet);
 	virtual ~Player();
 
 	/*				FUNCTION               */

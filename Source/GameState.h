@@ -2,12 +2,10 @@
 #include "State.h"
 #include "PauseMenu.h"
 #include "Player.h"
-#include "Bolt.h"
 
 class State;
 class PauseMenu;
 class Player;
-class Bolt;
 
 class GameState : public State
 {
@@ -27,17 +25,15 @@ private:
 	Player* player;
 	sf::Vector2f movementDirection;
 
-	std::vector<Bolt> bolts;
-
 	/*             INITIALIZATION          */
 	void initDeferredRender();
 	void initView();
 	void initKeybinds();
 	void initFonts();
+	void initSpritesheet();
 	void initPauseMenu();
 	void initPlayer();
 	void initMap();
-	void initBolts();
 
 public:
 	/*       CONSTRUCTORS/DESTRUCTORS      */

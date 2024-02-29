@@ -43,6 +43,9 @@ protected:
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 
+	// Entity textures
+	sf::Texture* entitySpritesheet;
+
 	/*             INITIALIZATION          */
 	virtual void initKeybinds() = 0;
 
